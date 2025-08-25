@@ -1,0 +1,138 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+.dashboard {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 60px);
+    background: rgba(0,0,0,0.85);
+    padding: 10px 15px;
+    color: white;
+    z-index: 1000;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.dashboard h2 {
+    margin: 0;
+    font-size: 18px;
+    white-space: nowrap;
+}
+
+input, select, button {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+input, select {
+    flex: 1;
+    min-width: 120px;
+}
+
+button {
+    background-color: #2c3e50;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #34495e;
+}
+
+.swap-btn {
+    background-color: #8e44ad;
+    width: 40px;
+    text-align: center;
+    font-weight: bold;
+    flex: none;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.go-btn {
+    background: #27ae60;
+    flex: none;
+    font-weight: bold;
+}
+
+.profile-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #8e44ad;
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+.profile-popup {
+    position: absolute;
+    top: 65px;
+    right: 15px;
+    background: rgba(0,0,0,0.95);
+    padding: 15px;
+    border-radius: 12px;
+    color: white;
+    width: 250px;
+    display: none;
+    z-index: 1200;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.profile-popup h3 {
+    margin: 0 0 10px 0;
+    text-align: center;
+}
+
+.profile-popup p {
+    margin: 6px 0;
+    font-size: 14px;
+}
+
+.edit-btn {
+    background-color: #8e44ad;
+    width: 100%;
+    margin-top: 10px;
+}
+
+@media(max-width: 768px) {
+    .dashboard {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+    .filters {
+        flex-direction: column;
+    }
+}

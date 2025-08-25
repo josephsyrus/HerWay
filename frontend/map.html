@@ -6,14 +6,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <style>
-/* Lock everything inside viewport */
+
 html, body {
     margin: 0;
     padding: 0;
     font-family: 'Raleway', sans-serif;
     height: 100vh;
     width: 100vw;
-    overflow: hidden; /* 🚫 no scroll down/sideways */
+    overflow: hidden;
 }
 
 #map {
@@ -21,12 +21,11 @@ html, body {
     width: 100%;
 }
 
-/* Full-width navbar */
 .dashboard {
     position: absolute;
     top: 0;
     left: 0;
-    width: calc(100% - 60px); /* leave space for profile icon */
+    width: calc(100% - 60px); 
     background: rgba(0,0,0,0.85);
     padding: 10px 15px;
     color: white;
@@ -44,7 +43,6 @@ html, body {
     white-space: nowrap;
 }
 
-/* Inputs and buttons */
 input, select, button {
     padding: 8px 10px;
     border-radius: 8px;
@@ -90,7 +88,6 @@ button:hover {
     font-weight: bold;
 }
 
-/* Profile button stays pinned */
 .profile-btn {
     position: absolute;
     top: 15px;
@@ -108,7 +105,6 @@ button:hover {
     z-index: 1100;
 }
 
-/* Profile popup */
 .profile-popup {
     position: absolute;
     top: 65px;
@@ -139,7 +135,6 @@ button:hover {
     margin-top: 10px;
 }
 
-/* Responsive */
 @media(max-width: 768px) {
     .dashboard {
         flex-direction: column;
@@ -156,7 +151,6 @@ button:hover {
 
 <div id="map"></div>
 
-<!-- Profile Button -->
 <div class="profile-btn" onclick="toggleProfile()">👤</div>
 <div class="profile-popup" id="profilePopup">
     <h3>User Profile</h3>
@@ -166,7 +160,6 @@ button:hover {
     <button class="edit-btn">Edit Info</button>
 </div>
 
-<!-- Navbar Dashboard -->
 <div class="dashboard">
     <h2>HerWay</h2>
     
