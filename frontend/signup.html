@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Sign Up</title>
     <link rel="stylesheet" href="/styles/loginStyles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,38 +26,16 @@
         </div>
         <div class="form-panel">
             <div class="form-content">
-                <h2>Log in</h2>
-                <p class="subtitle">Continue with your Google account.</p>
+                <h2>Create an account</h2>
+                <p class="subtitle">Join HerWay with your Google account.</p>
                 <div class="divider"></div>
                 <a href="/auth/google" class="google-btn">
                     <img src="/images/g-logo.png" alt="Google logo">
-                    <span>Sign in with Google</span>
+                    <span>Sign up with Google</span>
                 </a>
-                <p class="signup-link-text">Don't have an account? <a href="/auth/signup">Sign up</a></p>
-                <a href="/auth/logout" class="logout-link" style="display: none;">Logout</a>
+                <p class="signup-text">Already have an account? <a href="/auth/login">Log in</a></p>
             </div>
         </div>
     </div>
-    
-    <script>
-      // Simple script to check if a user is logged in and show a logout link
-      document.addEventListener('DOMContentLoaded', async () => {
-        try {
-          const res = await fetch('/api/current_user');
-          if (res.ok) {
-            const user = await res.json();
-            if (user) {
-              // User is logged in
-              document.querySelector('.subtitle').textContent = `Welcome back, ${user.firstName}!`;
-              document.querySelector('.google-btn').style.display = 'none';
-              document.querySelector('.logout-link').style.display = 'block';
-              document.querySelector('.signup-link-text').style.display = 'none';
-            }
-          }
-        } catch (error) {
-          console.error('Error checking auth status', error);
-        }
-      });
-    </script>
 </body>
 </html>

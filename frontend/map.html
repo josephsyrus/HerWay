@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HerWay Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<style>
+/* Lock everything inside viewport */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden; /* 🚫 no scroll down/sideways */
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+/* Full-width navbar */
+.dashboard {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 60px); /* leave space for profile icon */
+    background: rgba(0,0,0,0.85);
+    padding: 10px 15px;
+    color: white;
+    z-index: 1000;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.dashboard h2 {
+    margin: 0;
+    font-size: 18px;
+    white-space: nowrap;
+}
+
+/* Inputs and buttons */
+input, select, button {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+input, select {
+    flex: 1;
+    min-width: 120px;
+}
+
+button {
+    background-color: #2c3e50;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #34495e;
+}
+
+.swap-btn {
+    background-color: #8e44ad;
+    width: 40px;
+    text-align: center;
+    font-weight: bold;
+    flex: none;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.go-btn {
+    background: #27ae60;
+    flex: none;
+    font-weight: bold;
+}
+
+/* Profile button stays pinned */
+.profile-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #8e44ad;
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+/* Profile popup */
+.profile-popup {
+    position: absolute;
+    top: 65px;
+    right: 15px;
+    background: rgba(0,0,0,0.95);
+    padding: 15px;
+    border-radius: 12px;
+    color: white;
+    width: 250px;
+    display: none;
+    z-index: 1200;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.profile-popup h3 {
+    margin: 0 0 10px 0;
+    text-align: center;
+}
+
+.profile-popup p {
+    margin: 6px 0;
+    font-size: 14px;
+}
+
+.edit-btn {
+    background-color: #8e44ad;
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Responsive */
+@media(max-width: 768px) {
+    .dashboard {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+    .filters {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<!-- Profile Button -->
+<div class="profile-btn" onclick="toggleProfile()">👤</div>
+<div class="profile-popup" id="profilePopup">
+    <h3>User Profile</h3>
+    <p><b>Name:</b> Jane Doe</p>
+    <p><b>Email:</b> jane@example.com</p>
+    <p><b>Phone:</b> +91 98765 43210</p>
+    <button class="edit-btn">Edit Info</button>
+</div>
+
+<!-- Navbar Dashboard -->
+<div class="dashboard">
+    <h2>HerWay</h2>
+    
+    <input type="text" id="source" placeholder="Start Location">
+    <button class="swap-btn" onclick="swapLocations()">⇄</button>
+    <input type="text" id="destination" placeholder="Destination">
+    
+    <div class="filters">
+        <select id="transport">
+            <option value="bus">Bus</option>
+            <option value="train">Train</option>
+            <option value="cab">Cab</option>
+        </select>
+        <select id="time">
+            <option value="now">Now</option>
+            <option value="morning">Morning</option>
+            <option value="evening">Evening</option>
+        </select>
+    </div>
+    
+    <button class="go-btn" onclick="go()">GO</button>
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+var indiaBounds = [
+    [6.4627, 68.1097],
+    [37.0970, 97.3953]
+];
+
+var map = L.map('map', {
+    center: [22.9734, 78.6569],
+    zoom: 5,
+    minZoom: 4,
+    maxZoom: 18,
+    maxBounds: indiaBounds,
+    maxBoundsViscosity: 1.0,
+    zoomControl: false,
+    worldCopyJump: false, 
+    dragging: true
+});
+
+L.control.zoom({ position: 'bottomleft' }).addTo(map);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+function swapLocations() {
+    const source = document.getElementById('source');
+    const destination = document.getElementById('destination');
+    [source.value, destination.value] = [destination.value, source.value];
+}
+
+function go() {
+    alert(`Searching route from ${document.getElementById('source').value} to ${document.getElementById('destination').value}`);
+}
+
+function toggleProfile() {
+    const popup = document.getElementById('profilePopup');
+    popup.style.display = popup.style.display === "block" ? "none" : "block";
+}
+</script>
+
+</body>
+</html>
